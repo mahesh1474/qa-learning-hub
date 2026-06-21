@@ -593,3 +593,36 @@ void userProfileFieldsAreCorrect() {
 };
 
 const TOPIC_ORDER = ['selenium', 'playwright', 'apiTesting', 'java', 'sql', 'git', 'jenkins', 'testng', 'junit', 'cucumber'];
+
+// Maps each topic id to its icon id in assets/icons/tech/tech-icons-sprite.svg
+// (used as a fallback when no real logo is available or fails to load)
+const TOPIC_ICON_MAP = {
+  selenium: 'selenium',
+  playwright: 'playwright',
+  apiTesting: 'api',
+  java: 'java',
+  sql: 'sql',
+  git: 'git',
+  jenkins: 'jenkins',
+  testng: 'testng',
+  junit: 'junit',
+  cucumber: 'cucumber',
+};
+
+// Real brand logos via DevIcon (MIT-licensed, the same CDN pattern used
+// across the wider dev community for this exact purpose). Each entry's
+// `src` is verified to exist; `color` matches the project's real brand
+// color for the badge background, mirroring common portfolio conventions.
+// testng has no confirmed DevIcon entry, so it intentionally has no real
+// logo here — TOPIC_ICON_MAP's custom icon is used for it instead.
+const TOPIC_REAL_LOGO = {
+  selenium: { src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/selenium/selenium-original.svg', color: '#43B02A' },
+  playwright: { src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/playwright/playwright-original.svg', color: '#2EAD33' },
+  apiTesting: { src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg', color: '#FF6C37' },
+  java: { src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg', color: '#F89820' },
+  sql: { src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg', color: '#4479A1' },
+  git: { src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg', color: '#F05032' },
+  jenkins: { src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jenkins/jenkins-original.svg', color: '#D33833' },
+  junit: { src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/junit/junit-original.svg', color: '#25A162' },
+  cucumber: { src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cucumber/cucumber-plain.svg', color: '#23D959' },
+};

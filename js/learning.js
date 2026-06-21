@@ -23,7 +23,7 @@
       const completed = !!data.topicsCompleted[id];
       return `
         <button class="sidebar-item ${completed ? 'completed' : ''}" data-topic="${id}">
-          <span class="topic-glyph">${t.glyph}</span>
+          <span class="topic-glyph">${renderTopicIconBadge(id, 18)}</span>
           <span class="sidebar-item-name">${t.name}</span>
           <span class="sidebar-item-check">✓</span>
         </button>

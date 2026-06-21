@@ -1,12 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
   <defs>
     <linearGradient id="bg-grad" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#5B5FEF"/>
-      <stop offset="55%" stop-color="#8B5CF6"/>
-      <stop offset="100%" stop-color="#22D3EE"/>
+      <stop offset="0%" stop-color="#14162A"/>
+      <stop offset="100%" stop-color="#1F2238"/>
     </linearGradient>
   </defs>
   <rect width="64" height="64" rx="14" fill="url(#bg-grad)"/>
-  <!-- A clean checkmark inside a rounded "shield-ish" bracket pair, centered -->
-  <path d="M21 33 L29 41 L45 23" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- Graduation cap: mortarboard (diamond) + band + tassel, in the yellow accent -->
+  <path d="M32 16 L54 26 L32 36 L10 26 Z" fill="#FFC93C"/>
+  <path d="M20 29.5 V38 C20 41 25.5 43.5 32 43.5 C38.5 43.5 44 41 44 38 V29.5" stroke="#FFC93C" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <line x1="48" y1="27.5" x2="48" y2="40" stroke="#FFC93C" stroke-width="2.4" stroke-linecap="round"/>
+  <circle cx="48" cy="42" r="2.6" fill="#FFC93C"/>
 </svg>

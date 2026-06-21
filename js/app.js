@@ -307,6 +307,17 @@ function initThemeToggleButtons() {
   document.querySelectorAll('.theme-toggle').forEach(btn => {
     btn.addEventListener('click', () => QATheme.toggle());
   });
+
+  document.querySelectorAll('.theme-switch').forEach(btn => {
+    // aria-checked reflects "light mode is on" to match the switch's
+    // visual sun/moon convention, kept in sync on every toggle.
+    const syncAria = () => btn.setAttribute('aria-checked', document.documentElement.getAttribute('data-theme') === 'light' ? 'true' : 'false');
+    syncAria();
+    btn.addEventListener('click', () => {
+      QATheme.toggle();
+      syncAria();
+    });
+  });
 }
 
 /* ---------------------------------------------------------
@@ -339,6 +350,31 @@ function initFab() {
    --------------------------------------------------------- */
 function getBasePrefix() {
   return window.location.pathname.includes('/pages/') ? '../' : '';
+}
+
+/**
+ * Renders a topic's icon badge — a real brand logo (via DevIcon CDN) with
+ * a brand-colored glow when available, falling back to this project's own
+ * custom SVG icon (assets/icons/tech/tech-icons-sprite.svg) for topics
+ * without a confirmed real logo, or automatically if the real logo image
+ * fails to load for any reason (e.g. no network access).
+ */
+function renderTopicIconBadge(topicId, sizePx) {
+  const size = sizePx || 26;
+  const base = getBasePrefix();
+  const real = (typeof TOPIC_REAL_LOGO !== 'undefined') ? TOPIC_REAL_LOGO[topicId] : null;
+  const fallbackIconId = (typeof TOPIC_ICON_MAP !== 'undefined') ? TOPIC_ICON_MAP[topicId] : null;
+  const fallbackSvg = fallbackIconId
+    ? `<svg viewBox="0 0 24 24" width="${size}" height="${size}"><use href="${base}assets/icons/tech/tech-icons-sprite.svg#icon-${fallbackIconId}"></use></svg>`
+    : '';
+
+  if (real) {
+    // onerror swaps in the fallback SVG and removes itself, so a CDN
+    // hiccup never shows a broken-image icon to the person using the site.
+    const fallbackEscaped = fallbackSvg.replace(/"/g, '&quot;');
+    return `<img src="${real.src}" alt="${topicId}" width="${size}" height="${size}" style="filter:drop-shadow(0 0 6px ${real.color}66)" onerror="this.outerHTML='${fallbackEscaped}'">`;
+  }
+  return fallbackSvg;
 }
 
 /* ---------------------------------------------------------

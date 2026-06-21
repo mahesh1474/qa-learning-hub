@@ -119,8 +119,14 @@
 
     'date-picker': () => `
       <div class="pg-row">
-        <label class="pg-label" for="w-date">Booking Date</label>
-        <input class="pg-input" id="w-date" type="date" data-testid="date-picker">
+        <label class="pg-label" for="w-date-display">Booking Date</label>
+        <div class="pg-datepicker-wrap">
+          <button class="pg-input pg-datepicker-trigger" id="w-date-display" type="button" aria-haspopup="true" aria-expanded="false">
+            <span class="pg-datepicker-trigger-text">Select a date…</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18" stroke-linecap="round"/></svg>
+          </button>
+          <div class="pg-calendar" id="w-calendar" hidden></div>
+        </div>
         <div class="pg-result-line" data-result="date"></div>
       </div>`,
 
@@ -325,8 +331,115 @@
       render(1);
     },
     'date-picker': (root) => {
-      root.querySelector('#w-date').addEventListener('change', (e) => {
-        root.querySelector('[data-result="date"]').textContent = `value = "${e.target.value}"`;
+      const trigger = root.querySelector('#w-date-display');
+      const triggerText = root.querySelector('.pg-datepicker-trigger-text');
+      const calendar = root.querySelector('#w-calendar');
+      const resultEl = root.querySelector('[data-result="date"]');
+
+      const today = new Date();
+      let viewYear = today.getFullYear();
+      let viewMonth = today.getMonth(); // 0-indexed
+      let selectedDate = null; // {year, month, day}
+
+      const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+      const DAY_LABELS = ['Su','Mo','Tu','We','Th','Fr','Sa'];
+
+      function formatSelected(d) {
+        const mm = String(d.month + 1).padStart(2, '0');
+        const dd = String(d.day).padStart(2, '0');
+        return `${d.year}-${mm}-${dd}`;
+      }
+
+      function renderCalendar() {
+        const firstDayOfWeek = new Date(viewYear, viewMonth, 1).getDay();
+        const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+        const daysInPrevMonth = new Date(viewYear, viewMonth, 0).getDate();
+
+        let cells = '';
+        // Leading days from previous month (dimmed, not clickable)
+        for (let i = firstDayOfWeek - 1; i >= 0; i--) {
+          cells += `<button class="pg-cal-day muted-day" disabled>${daysInPrevMonth - i}</button>`;
+        }
+        // Current month days
+        for (let day = 1; day <= daysInMonth; day++) {
+          const isToday = day === today.getDate() && viewMonth === today.getMonth() && viewYear === today.getFullYear();
+          const isSelected = selectedDate && selectedDate.day === day && selectedDate.month === viewMonth && selectedDate.year === viewYear;
+          cells += `<button class="pg-cal-day ${isToday ? 'is-today' : ''} ${isSelected ? 'is-selected' : ''}" data-day="${day}">${day}</button>`;
+        }
+        // Trailing days from next month (dimmed, not clickable) to fill the grid evenly
+        const totalCells = firstDayOfWeek + daysInMonth;
+        const trailing = (7 - (totalCells % 7)) % 7;
+        for (let i = 1; i <= trailing; i++) {
+          cells += `<button class="pg-cal-day muted-day" disabled>${i}</button>`;
+        }
+
+        calendar.innerHTML = `
+          <div class="pg-cal-header">
+            <button class="pg-cal-nav" id="cal-prev" aria-label="Previous month">‹</button>
+            <span class="pg-cal-title">${MONTH_NAMES[viewMonth]} ${viewYear}</span>
+            <button class="pg-cal-nav" id="cal-next" aria-label="Next month">›</button>
+          </div>
+          <div class="pg-cal-weekdays">${DAY_LABELS.map(d => `<span>${d}</span>`).join('')}</div>
+          <div class="pg-cal-grid">${cells}</div>
+          <div class="pg-cal-footer">
+            <button class="pg-cal-today-btn" id="cal-today">Today</button>
+          </div>
+        `;
+      }
+
+      function openCalendar() {
+        calendar.hidden = false;
+        trigger.setAttribute('aria-expanded', 'true');
+        renderCalendar();
+      }
+
+      function closeCalendar() {
+        calendar.hidden = true;
+        trigger.setAttribute('aria-expanded', 'false');
+      }
+
+      trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        calendar.hidden ? openCalendar() : closeCalendar();
+      });
+
+      calendar.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (e.target.id === 'cal-prev') {
+          viewMonth--; if (viewMonth < 0) { viewMonth = 11; viewYear--; }
+          renderCalendar();
+          return;
+        }
+        if (e.target.id === 'cal-next') {
+          viewMonth++; if (viewMonth > 11) { viewMonth = 0; viewYear++; }
+          renderCalendar();
+          return;
+        }
+        if (e.target.id === 'cal-today') {
+          viewMonth = today.getMonth(); viewYear = today.getFullYear();
+          selectedDate = { year: viewYear, month: viewMonth, day: today.getDate() };
+          renderCalendar();
+          triggerText.textContent = formatSelected(selectedDate);
+          resultEl.textContent = `value = "${formatSelected(selectedDate)}"`;
+          return;
+        }
+        const dayBtn = e.target.closest('.pg-cal-day');
+        if (dayBtn && !dayBtn.disabled) {
+          selectedDate = { year: viewYear, month: viewMonth, day: parseInt(dayBtn.dataset.day, 10) };
+          triggerText.textContent = formatSelected(selectedDate);
+          resultEl.textContent = `value = "${formatSelected(selectedDate)}"`;
+          renderCalendar();
+          closeCalendar();
+        }
+      });
+
+      document.addEventListener('click', (e) => {
+        if (calendar.hidden) return;
+        const clickedInsideCalendar = calendar.contains(e.target);
+        const clickedTrigger = trigger.contains(e.target);
+        if (!clickedInsideCalendar && !clickedTrigger) {
+          closeCalendar();
+        }
       });
     },
     'file-upload': (root) => {

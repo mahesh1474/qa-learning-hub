@@ -8,7 +8,6 @@
     { status: 'PASS', target: 'describe("Playwright")', detail: '→ auto-wait confirmed' },
     { status: 'PASS', target: 'describe("API Testing")', detail: '→ 12/12 status codes covered' },
     { status: 'FAIL', target: 'describe("Old habits")', detail: '→ Thread.sleep(5000) detected' },
-    { status: 'PASS', target: 'describe("SQL")', detail: '→ backend validation passed' },
     { status: 'PASS', target: 'describe("You")', detail: '→ ready to start learning' },
   ];
 
@@ -36,7 +35,7 @@
       return `
         <a href="pages/learning.html#${t.id}" class="card card-hover topic-card reveal" style="transition-delay:${(i % 4) * 60}ms">
           <div class="topic-card-top">
-            <span class="topic-glyph">${t.glyph}</span>
+            <span class="topic-glyph">${renderTopicIconBadge(id, 28)}</span>
             <span class="badge ${diffClass}">${t.difficulty}</span>
           </div>
           <h3>${t.name}</h3>

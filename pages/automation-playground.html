@@ -16,7 +16,7 @@
 
 <div id="loading-screen">
   <div class="loader-mark">
-    <div class="loader-glyph"><span class="loader-dot"></span><span class="loader-dot"></span><span class="loader-dot"></span><span>mounting practice elements…</span></div>
+    <div class="loader-glyph"><span class="loader-spinner"></span><span>mounting practice elements…</span></div>
   </div>
 </div>
 
@@ -38,9 +38,15 @@
       <a href="learning-paths.html">Learning Paths</a>
     </nav>
     <div class="nav-actions">
-      <button class="theme-toggle" aria-label="Toggle dark mode">
-        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" stroke-linecap="round"/></svg>
+      <button class="theme-switch" aria-label="Toggle dark mode" role="switch" aria-checked="true">
+        <span class="theme-switch-track">
+          <span class="theme-switch-icon sun-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" stroke-linecap="round"/></svg>
+          </span>
+          <span class="theme-switch-knob">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          </span>
+        </span>
       </button>
       <a href="dashboard.html" class="profile-btn" aria-label="Your dashboard">QA</a>
     </div>
@@ -102,6 +108,17 @@
       <div class="footer-brand">
         <a href="../index.html" class="brand"><span class="brand-mark"><img src="../assets/icons/logo.svg" alt="QA Learning Hub logo"></span><span>Learning Hub</span></a>
         <p>An interactive platform for QA Engineers, Manual Testers, and Automation Testers to learn and practice.</p>
+        <div class="footer-social-row">
+          <a href="https://github.com" target="_blank" rel="noopener noreferrer" title="View source on GitHub" class="footer-social-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-1.04-.01-1.88-2.78.61-3.37-1.21-3.37-1.21-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.34-1.11.62-1.37-2.22-.26-4.55-1.13-4.55-5.03 0-1.11.38-2.02 1.02-2.73-.1-.26-.44-1.31.1-2.72 0 0 .84-.27 2.75 1.04a9.3 9.3 0 0 1 5 0c1.91-1.31 2.75-1.04 2.75-1.04.54 1.41.2 2.46.1 2.72.64.71 1.02 1.62 1.02 2.73 0 3.91-2.34 4.77-4.57 5.02.36.32.68.94.68 1.9 0 1.37-.01 2.48-.01 2.81 0 .27.18.6.69.49A10.02 10.02 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg>
+          </a>
+          <a href="mailto:feedback@qalearninghub.example" title="Send feedback" class="footer-social-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="about.html" title="About this project" class="footer-social-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.5" stroke-linecap="round"/></svg>
+          </a>
+        </div>
       </div>
       <div class="footer-col">
         <h4>Learn</h4>
@@ -123,8 +140,9 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 QA Learning Hub. All rights reserved.<br class="footer-credit-break"> Designed &amp; Developed by <strong>Mahesh</strong>.</span>
-      <span class="assert-line pass"><span class="status mono">✓ PASS</span><span class="target mono">footer.render()</span></span>
+      <span class="footer-bottom-copyright">© 2026 QA Learning Hub. All rights reserved.<br class="footer-credit-break"> Designed &amp; Developed by <strong>Mahesh</strong>.</span>
+      <span class="footer-bottom-tagline">Crafted with <span class="footer-heart">♥</span> and a lot of coffee</span>
+      <span class="footer-bottom-status"><span class="footer-status-dot"></span> All systems running</span>
     </div>
   </div>
 </footer>

@@ -57,28 +57,8 @@
 
 .center-cta { justify-content: center; }
 
-.hero-meta {
-  display: flex;
-  align-items: center;
-  gap: var(--sp-4);
-  font-size: 0.88rem;
-}
-
-.avatar-stack { display: flex; }
-.avatar-stack span {
-  width: 30px; height: 30px;
-  border-radius: 50%;
-  border: 2px solid var(--bg-0);
-  background: var(--grad-brand);
-  margin-left: -10px;
-}
-.avatar-stack span:first-child { margin-left: 0; }
-.avatar-stack span:nth-child(2) { background: linear-gradient(135deg, var(--purple), var(--cyan)); }
-.avatar-stack span:nth-child(3) { background: linear-gradient(135deg, var(--cyan), var(--pass)); }
-.avatar-stack span:nth-child(4) { background: linear-gradient(135deg, var(--pass), var(--indigo)); }
-
 /* ---------- Hero terminal visual ---------- */
-.hero-visual { position: relative; perspective: 1200px; }
+.hero-visual { position: relative; perspective: 1200px; margin-bottom: var(--sp-6); }
 
 .terminal-card {
   background: var(--bg-1);
@@ -144,7 +124,7 @@
 .float-chip span { font-family: var(--font-body); font-size: 0.7rem; font-weight: 500; color: var(--text-2); }
 
 .chip-1 { top: -16px; right: -16px; animation-delay: 0.4s; }
-.chip-2 { bottom: -20px; left: -24px; animation-delay: 1s; }
+.chip-2 { bottom: -32px; left: -28px; animation-delay: 1s; }
 
 @keyframes floatChip {
   0%, 100% { transform: translateY(0) rotate(0deg); }
@@ -198,8 +178,20 @@
   position: relative;
 }
 
+.roadmap-track {
+  position: absolute;
+  top: 38px;
+  left: 5%;
+  right: 5%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--border-hi) 10%, var(--border-hi) 90%, transparent);
+  z-index: 0;
+  pointer-events: none;
+}
+
 @media (max-width: 968px) {
   .roadmap { grid-template-columns: repeat(2, 1fr); }
+  .roadmap-track { display: none; }
 }
 @media (max-width: 560px) {
   .roadmap { grid-template-columns: 1fr; }
@@ -231,8 +223,16 @@
 .roadmap-step p { font-size: 0.9rem; color: var(--text-2); }
 
 /* ---------- Path cards ---------- */
-.path-card { display: flex; flex-direction: column; align-items: flex-start; gap: var(--sp-3); }
+.path-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  height: 100%;
+}
 .path-card h3 { font-size: 1.1rem; }
+.path-card p { flex-shrink: 0; }
+.path-card .btn { margin-top: auto; }
 .path-steps {
   font-size: 0.78rem;
   color: var(--cyan);
@@ -274,14 +274,24 @@
 }
 
 .topic-glyph {
-  font-family: var(--font-mono);
-  font-weight: 700;
-  font-size: 0.82rem;
-  color: var(--indigo-light);
-  background: rgba(91,95,239,0.1);
-  border: 1px solid rgba(91,95,239,0.25);
-  border-radius: var(--r-sm);
-  padding: 0.3rem 0.55rem;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  background: rgba(255, 201, 60, 0.1);
+  border: 1px solid rgba(255, 201, 60, 0.3);
+  border-radius: var(--r-md);
+  box-shadow: 0 0 16px rgba(255, 201, 60, 0.25);
+  transition: box-shadow var(--dur-med) var(--ease-soft), transform var(--dur-med) var(--ease-soft);
+}
+
+.topic-card:hover .topic-glyph,
+.sidebar-item:hover .topic-glyph,
+.sidebar-item.active .topic-glyph {
+  box-shadow: 0 0 22px rgba(255, 201, 60, 0.4);
+  transform: scale(1.06);
 }
 
 .topic-card h3 { font-size: 1.08rem; }

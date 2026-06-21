@@ -40,6 +40,20 @@ const QAEngine = (() => {
     TOPIC_ORDER.forEach(topicId => {
       const t = TOPIC_DATA[topicId];
 
+      // Intro/definition — answers "what is X" style questions directly.
+      // This was previously missing entirely, which is why basic
+      // definitional questions returned unrelated best-practice entries
+      // instead of the actual intro paragraph written for exactly this.
+      entries.push({
+        type: 'intro',
+        topicId,
+        topicName: t.name,
+        title: `What is ${t.name}?`,
+        answer: t.intro,
+        searchText: `what is ${t.name} ${t.intro}`,
+        tokens: tokenize(`what is ${t.name} ${t.intro}`),
+      });
+
       // Concepts
       t.concepts.forEach(c => {
         entries.push({
@@ -67,16 +81,22 @@ const QAEngine = (() => {
         });
       });
 
-      // Best practices
+      // Best practices — each gets its own distinct title derived from a
+      // short snippet of its actual content, instead of all sharing the
+      // same generic "<Topic> best practice" title. The shared-title
+      // version meant every practice entry scored identically on the
+      // topic-name boost, so searches surfaced 2-3 indistinguishable
+      // "X best practice" results instead of the most relevant one.
       t.bestPractices.forEach(p => {
+        const snippet = p.split(/[—,.]/)[0].trim();
         entries.push({
           type: 'practice',
           topicId,
           topicName: t.name,
-          title: `${t.name} best practice`,
+          title: `${t.name} tip: ${snippet}`,
           answer: p,
-          searchText: `${p} ${t.name} best practice`,
-          tokens: tokenize(`${p} ${t.name} best practice`),
+          searchText: `${p} ${t.name} best practice tip`,
+          tokens: tokenize(`${p} ${t.name} best practice tip`),
         });
       });
     });
@@ -112,7 +132,6 @@ const QAEngine = (() => {
       const entryTokenSet = new Set(entry.tokens);
       const titleTokens = new Set(tokenize(entry.title));
       const titleLower = entry.title.toLowerCase();
-      const searchTextLower = entry.searchText.toLowerCase();
 
       queryTokens.forEach(qt => {
         if (entryTokenSet.has(qt)) score += 1;
@@ -125,9 +144,21 @@ const QAEngine = (() => {
         if (titleLower.replace(/[^a-z0-9]/g, '').includes(c)) score += 4;
       });
 
-      // Small boost for topic name appearing directly in the query
-      // (e.g. "selenium wait" should favor Selenium entries)
-      if (queryLower.includes(entry.topicName.toLowerCase())) score += 3;
+      // Definitional-question boost: "what is X" / "what's X" should
+      // strongly prefer the topic's intro entry over best-practices or
+      // unrelated interview questions that happen to mention the topic
+      // name. Without this, "what is Selenium" had no way to distinguish
+      // the actual definition from three same-topic entries.
+      const isDefinitionalQuery = /^(what is|what's|whats|define|explain)\b/.test(queryLower);
+      if (isDefinitionalQuery && entry.type === 'intro' && queryLower.includes(entry.topicName.toLowerCase())) {
+        score += 8;
+      }
+
+      // Small tiebreaker boost for topic name appearing directly in the
+      // query (e.g. "selenium wait" should lean toward Selenium entries)
+      // — kept low so it nudges ranking without flooding results with
+      // every entry from one topic regardless of actual relevance.
+      if (queryLower.includes(entry.topicName.toLowerCase())) score += 1;
 
       // Normalize by query length so short, highly-specific queries
       // ("stale element") aren't out-scored by long ones matching many
@@ -142,12 +173,23 @@ const QAEngine = (() => {
     // matching dozens of entries weakly) rather than always returning
     // something just because the index is large.
     const MIN_RAW_SCORE = 3;
+    const MAX_PER_TOPIC = 2; // avoid one topic's entries crowding out other relevant matches
 
-    return scored
+    const ranked = scored
       .filter(s => s.rawScore >= MIN_RAW_SCORE)
-      .sort((a, b) => b.score - a.score)
-      .slice(0, limit)
-      .map(s => s.entry);
+      .sort((a, b) => b.score - a.score);
+
+    const topicCounts = {};
+    const finalResults = [];
+    for (const s of ranked) {
+      const count = topicCounts[s.entry.topicId] || 0;
+      if (count >= MAX_PER_TOPIC) continue;
+      topicCounts[s.entry.topicId] = count + 1;
+      finalResults.push(s.entry);
+      if (finalResults.length >= limit) break;
+    }
+
+    return finalResults;
   }
 
   return { search, buildIndex };

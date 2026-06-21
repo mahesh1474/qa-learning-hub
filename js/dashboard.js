@@ -72,11 +72,18 @@
     }
 
     wrap.innerHTML = recent.map(a => {
-      const levelLabel = typeof QUIZ_LEVELS !== 'undefined' && QUIZ_LEVELS[a.topic] ? `${QUIZ_LEVELS[a.topic].label} Quiz` : a.topic;
+      let label = a.topic;
+      const parts = String(a.topic).split(':');
+      if (parts.length === 2 && typeof QUIZ_LEVELS !== 'undefined' && QUIZ_LEVELS[parts[1]]) {
+        const topicName = (typeof QUIZ_TOPIC_META !== 'undefined' && QUIZ_TOPIC_META[parts[0]]) ? QUIZ_TOPIC_META[parts[0]].name : parts[0];
+        label = `${topicName} — ${QUIZ_LEVELS[parts[1]].label}`;
+      } else if (typeof QUIZ_LEVELS !== 'undefined' && QUIZ_LEVELS[a.topic]) {
+        label = `${QUIZ_LEVELS[a.topic].label} Quiz`; // backward-compat with older level-only attempts
+      }
       const scoreClass = a.percentage >= 70 ? 'good' : a.percentage < 40 ? 'bad' : '';
       return `
         <div class="dash-quiz-row">
-          <span class="topic">${levelLabel}</span>
+          <span class="topic">${label}</span>
           <span class="date">${new Date(a.date).toLocaleDateString()}</span>
           <span class="score ${scoreClass}">${a.score}/${a.total} (${a.percentage}%)</span>
         </div>

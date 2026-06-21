@@ -122,11 +122,11 @@ const PLAYGROUND_DATA = {
       },
       'date-picker': {
         name: 'Date Picker', id: 'date-picker',
-        description: 'A widget for selecting a date, often via a popup calendar rather than free typing.',
+        description: 'A custom-built calendar widget for selecting a date via a popup grid — the pattern used by most modern web apps (React DatePicker, MUI, Ant Design) rather than the native browser date input.',
         usage: 'Booking forms, filters with date ranges, birthdates.',
-        seleniumTip: 'driver.findElement(By.id("date-input")).sendKeys("06/21/2026");',
-        playwrightTip: 'await page.getByLabel("Date").fill("2026-06-21")',
-        challenge: 'Open the calendar, navigate to the next month, and select a specific day — verifying the input reflects the chosen date.',
+        seleniumTip: 'driver.findElement(By.id("w-date-display")).click();\ndriver.findElement(By.xpath("//button[@data-day=\'21\' and not(@disabled)]")).click();',
+        playwrightTip: 'await page.getByRole("button", { name: /select a date/i }).click();\nawait page.locator(\'.pg-cal-day[data-day="21"]\').click();',
+        challenge: 'Open the calendar, navigate to the next month, and select a specific day — verifying the trigger button text reflects the chosen date.',
       },
       'file-upload': {
         name: 'File Upload', id: 'file-upload',

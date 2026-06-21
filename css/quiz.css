@@ -16,6 +16,77 @@
 }
 .quiz-topic-card .best-score strong { color: var(--pass-light); }
 
+/* ---------- Wide topic-first quiz cards ---------- */
+.quiz-topic-grid-wide { gap: var(--sp-6); }
+
+.quiz-topic-card-wide {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  cursor: default;
+  padding: var(--sp-6);
+}
+
+.quiz-topic-card-head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+}
+
+.quiz-topic-card-head h3 { font-size: 1.25rem; }
+
+.quiz-topic-card-sub { font-size: 0.88rem; }
+
+.quiz-level-btn-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-3);
+  margin-top: auto;
+}
+
+@media (max-width: 640px) {
+  .quiz-level-btn-row { grid-template-columns: 1fr; }
+}
+
+.quiz-level-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-1);
+  padding: var(--sp-4) var(--sp-3);
+  border-radius: var(--r-md);
+  border: 1px solid var(--border-hi);
+  background: var(--bg-1);
+  box-shadow: var(--shadow-3d-sm);
+  transition: transform var(--dur-fast) var(--ease-soft), box-shadow var(--dur-fast) var(--ease-soft), border-color var(--dur-fast) var(--ease-soft), background var(--dur-fast) var(--ease-soft);
+}
+
+.quiz-level-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-3d-md);
+}
+
+.quiz-level-btn-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.quiz-level-btn-meta {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-3);
+}
+
+.quiz-level-btn-beginner:hover { border-color: rgba(16,185,129,0.5); background: rgba(16,185,129,0.08); }
+.quiz-level-btn-beginner .quiz-level-btn-name { color: var(--pass-light); }
+
+.quiz-level-btn-intermediate:hover { border-color: rgba(245,158,11,0.5); background: rgba(245,158,11,0.08); }
+.quiz-level-btn-intermediate .quiz-level-btn-name { color: var(--warn); }
+
+.quiz-level-btn-advanced:hover { border-color: rgba(244,63,94,0.5); background: rgba(244,63,94,0.08); }
+.quiz-level-btn-advanced .quiz-level-btn-name { color: var(--fail); }
+
 /* ---------- Active quiz screen ---------- */
 #quiz-active-screen { padding: var(--sp-6) 0 var(--sp-9); max-width: 720px; margin: 0 auto; }
 
