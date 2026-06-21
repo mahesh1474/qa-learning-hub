@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Automation Playground — QA Learning Hub</title>
+<meta name="description" content="Practice real Selenium and Playwright locator strategies on 30+ interactive UI elements — alerts, frames, drag and drop, Shadow DOM, and more.">
+<link rel="icon" type="image/svg+xml" href="../assets/icons/logo.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/icons/favicon-180.png">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/layout.css">
+<link rel="stylesheet" href="../css/playground.css">
+</head>
+<body>
+
+<div id="loading-screen">
+  <div class="loader-mark">
+    <div class="loader-glyph"><span class="loader-dot"></span><span class="loader-dot"></span><span class="loader-dot"></span><span>mounting practice elements…</span></div>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="nav-inner">
+    <a href="../index.html" class="brand"><span class="brand-mark"><img src="../assets/icons/logo.svg" alt="QA Learning Hub logo"></span><span>Learning Hub</span></a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="../index.html">Home</a>
+      <a href="learning.html">Learning Hub</a>
+      <a href="automation-playground.html" class="active">Playground</a>
+      <a href="api-testing-lab.html">API Lab</a>
+      <a href="quiz-center.html">Quiz Center</a>
+      <a href="coding-challenges.html">Challenges</a>
+      <a href="interview-preparation.html">Interview Prep</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="learning-paths.html">Learning Paths</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="search-trigger" id="search-trigger" aria-label="Open search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35" stroke-linecap="round"/></svg>
+        <span>Search…</span><kbd>⌘K</kbd>
+      </button>
+      <button class="theme-toggle" aria-label="Toggle dark mode">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" stroke-linecap="round"/></svg>
+      </button>
+      <a href="dashboard.html" class="profile-btn" aria-label="Your dashboard">QA</a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-drawer-backdrop" id="mobile-drawer-backdrop"></div>
+  <div class="mobile-drawer" id="mobile-drawer">
+    <div class="mobile-drawer-head">
+      <span class="brand" style="font-size:0.95rem">Menu</span>
+      <button class="mobile-drawer-close" id="mobile-drawer-close" aria-label="Close menu">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <button class="mobile-drawer-search-btn" id="mobile-drawer-search-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35" stroke-linecap="round"/></svg>
+      <span>Search…</span>
+    </button>
+    <div class="mobile-drawer-section-label">Navigate</div>
+    <a href="../index.html">Home</a>
+    <a href="learning.html">Learning Hub</a>
+    <a href="automation-playground.html" class="active">Automation Playground</a>
+    <a href="api-testing-lab.html">API Testing Lab</a>
+        <a href="learning-paths.html">Learning Paths</a>
+    <a href="quiz-center.html">Quiz Center</a>
+    <a href="coding-challenges.html">Coding Challenges</a>
+    <a href="interview-preparation.html">Interview Preparation</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="learning-paths.html">Learning Paths</a>
+    <div class="mobile-drawer-theme-row">
+      <span>Dark / Light mode</span>
+      <button class="theme-toggle" aria-label="Toggle dark mode">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="search-overlay" id="search-overlay">
+  <div class="search-panel">
+    <div class="search-input-row">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35" stroke-linecap="round"/></svg>
+      <input type="text" id="global-search-input" placeholder="Search topics, playground elements, API endpoints…" autocomplete="off">
+      <span class="search-esc">ESC</span>
+    </div>
+    <div class="search-results" id="search-results"></div>
+  </div>
+</div>
+
+<main>
+  <section class="learning-hero">
+    <div class="container">
+      <span class="eyebrow">Automation Playground</span>
+      <h1>Every element you'll ever need to locate.</h1>
+      <p class="muted">Real, working UI components — not screenshots. Open DevTools, inspect the DOM, and practice your locator strategy on each one.</p>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="pg-category-tabs" id="pg-category-tabs"></div>
+    <div class="pg-grid" id="pg-grid"></div>
+  </div>
+</main>
+
+<!-- Info drawer -->
+<div class="pg-drawer-overlay" id="pg-drawer-overlay">
+  <div class="pg-drawer" id="pg-drawer">
+    <!-- populated by playground.js -->
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="brand"><span class="brand-mark"><img src="../assets/icons/logo.svg" alt="QA Learning Hub logo"></span><span>Learning Hub</span></a>
+        <p>An interactive platform for QA Engineers, Manual Testers, and Automation Testers to learn and practice.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Learn</h4>
+        <a href="learning.html">Learning Hub</a>
+        <a href="automation-playground.html">Automation Playground</a>
+        <a href="api-testing-lab.html">API Testing Lab</a>
+      </div>
+      <div class="footer-col">
+        <h4>Practice</h4>
+        <a href="quiz-center.html">Quiz Center</a>
+        <a href="coding-challenges.html">Coding Challenges</a>
+        <a href="interview-preparation.html">Interview Prep</a>
+      </div>
+      <div class="footer-col">
+        <h4>Account</h4>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="about.html">About</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 QA Learning Hub. Built with HTML, CSS &amp; JavaScript.</span>
+      <span class="assert-line pass"><span class="status mono">✓ PASS</span><span class="target mono">footer.render()</span></span>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/app.js"></script>
+<script src="../js/playground-data.js"></script>
+<script src="../js/playground.js"></script>
+</body>
+</html>

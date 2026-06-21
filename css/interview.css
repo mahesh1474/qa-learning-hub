@@ -1,0 +1,49 @@
+/* ============================================================
+   INTERVIEW PREPARATION STYLES
+   ============================================================ */
+
+.iv-controls {
+  padding: var(--sp-6) 0 var(--sp-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.iv-search-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 0.7rem 1rem;
+}
+.iv-search-row svg { color: var(--text-2); flex-shrink: 0; }
+#iv-search-input { flex: 1; font-size: 0.92rem; color: var(--text-0); background: none; }
+#iv-search-input::placeholder { color: var(--text-3); }
+
+.iv-filter-row { display: flex; gap: var(--sp-3); flex-wrap: wrap; }
+.iv-select { width: auto; min-width: 160px; }
+
+#iv-bookmarks-toggle.active { border-color: var(--warn); color: var(--warn); background: rgba(245,158,11,0.08); }
+
+.iv-count { color: var(--text-3); font-size: 0.8rem; margin-bottom: var(--sp-4); }
+
+.iv-topic-tag {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--indigo-light);
+  background: rgba(91,95,239,0.1);
+  border-radius: var(--r-sm);
+  padding: 0.15rem 0.45rem;
+}
+
+.iv-bookmark-btn {
+  font-size: 1.1rem;
+  color: var(--text-3);
+  flex-shrink: 0;
+  line-height: 1;
+}
+.iv-bookmark-btn.active { color: var(--warn); }
+
+#iv-question-list { padding-bottom: var(--sp-9); }

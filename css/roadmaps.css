@@ -1,0 +1,281 @@
+/* ============================================================
+   LEARNING PATHS & CAREER ROADMAPS STYLES
+   ============================================================ */
+
+/* ---------- Roadmap cards ---------- */
+.roadmap-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.roadmap-card-accent {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 4px;
+}
+
+.roadmap-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.roadmap-glyph {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-0);
+  background: var(--bg-2);
+  border-radius: var(--r-sm);
+  width: 38px; height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.roadmap-card h3 { font-size: 1.1rem; }
+.roadmap-card .audience { font-size: 0.78rem; color: var(--text-3); }
+.roadmap-card .description { font-size: 0.88rem; color: var(--text-2); flex: 1; }
+
+.roadmap-card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.78rem;
+  color: var(--text-3);
+  font-family: var(--font-mono);
+}
+
+.roadmap-card-progress-track { margin-top: var(--sp-2); }
+.roadmap-card-progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.74rem;
+  color: var(--text-3);
+  margin-bottom: var(--sp-2);
+  font-family: var(--font-mono);
+}
+
+/* ---------- Roadmap detail view ---------- */
+#roadmap-back-btn { margin-bottom: var(--sp-6); }
+
+.roadmap-detail-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--sp-5);
+  flex-wrap: wrap;
+  margin-bottom: var(--sp-7);
+}
+
+.roadmap-detail-head h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin: var(--sp-2) 0 var(--sp-2); }
+.roadmap-detail-head .audience { color: var(--text-2); font-size: 0.95rem; margin-bottom: var(--sp-3); }
+.roadmap-detail-head .description { color: var(--text-1); max-width: 560px; }
+
+.roadmap-detail-progress-card {
+  min-width: 240px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--sp-4);
+  box-shadow: var(--shadow-3d-sm);
+}
+
+.roadmap-detail-progress-card .progress-label {
+  display: flex; justify-content: space-between;
+  font-size: 0.78rem; color: var(--text-3);
+  margin-bottom: var(--sp-2); font-family: var(--font-mono);
+}
+
+.roadmap-reset-btn { margin-top: var(--sp-3); width: 100%; }
+
+.roadmap-phase {
+  margin-bottom: var(--sp-7);
+}
+
+.roadmap-phase-title {
+  font-size: 1.05rem;
+  margin-bottom: var(--sp-4);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.roadmap-phase-title .phase-progress {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-3);
+}
+
+.roadmap-step-list { display: flex; flex-direction: column; gap: var(--sp-2); }
+
+.roadmap-step {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  transition: border-color var(--dur-fast) var(--ease-soft), background var(--dur-fast) var(--ease-soft);
+}
+
+.roadmap-step.completed { border-color: rgba(16,185,129,0.3); background: rgba(16,185,129,0.04); }
+
+.roadmap-step-checkbox {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--border-hi);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  flex-shrink: 0;
+  color: transparent;
+  transition: all var(--dur-fast) var(--ease-soft);
+}
+
+.roadmap-step.completed .roadmap-step-checkbox {
+  background: var(--pass);
+  border-color: var(--pass);
+  color: #06291d;
+}
+
+.roadmap-step-name { flex: 1; font-size: 0.92rem; color: var(--text-1); }
+.roadmap-step.completed .roadmap-step-name { color: var(--text-2); text-decoration: line-through; text-decoration-color: var(--text-3); }
+
+/* ---------- Recommended content row ---------- */
+.roadmap-recommend-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-4);
+  margin-top: var(--sp-4);
+}
+@media (max-width: 768px) { .roadmap-recommend-grid { grid-template-columns: 1fr; } }
+
+.roadmap-recommend-card {
+  background: var(--bg-1);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--sp-4);
+}
+.roadmap-recommend-card h5 { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-3); margin-bottom: var(--sp-3); }
+.roadmap-recommend-card a {
+  display: block;
+  font-size: 0.88rem;
+  color: var(--cyan);
+  padding: 0.3rem 0;
+}
+.roadmap-recommend-card a:hover { text-decoration: underline; }
+.roadmap-recommend-card .none { font-size: 0.85rem; color: var(--text-3); }
+
+/* ---------- Advisor ---------- */
+.advisor-card { max-width: 760px; margin: 0 auto; padding: var(--sp-7); }
+
+.advisor-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+}
+
+.advisor-field label { margin-bottom: var(--sp-2); }
+
+#advisor-submit-btn { align-self: flex-start; }
+
+.advisor-result-wrap {
+  margin-top: var(--sp-7);
+  padding-top: var(--sp-6);
+  border-top: 1px solid var(--border);
+}
+
+.advisor-result-head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-4);
+}
+
+.advisor-result-head h3 { font-size: 1.2rem; }
+
+.advisor-note {
+  background: rgba(91,95,239,0.08);
+  border: 1px solid rgba(91,95,239,0.25);
+  border-radius: var(--r-md);
+  padding: var(--sp-4);
+  font-size: 0.88rem;
+  color: var(--text-1);
+  margin-bottom: var(--sp-5);
+}
+
+.advisor-meta-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-5);
+}
+@media (max-width: 640px) { .advisor-meta-row { grid-template-columns: 1fr; } }
+
+.advisor-meta-item {
+  background: var(--bg-1);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--sp-4);
+  text-align: center;
+}
+.advisor-meta-item .num { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; color: var(--cyan); }
+.advisor-meta-item .label { font-size: 0.78rem; color: var(--text-2); margin-top: var(--sp-1); }
+
+.advisor-month-block {
+  background: var(--bg-1);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--sp-4);
+  margin-bottom: var(--sp-3);
+}
+.advisor-month-block h5 { font-size: 0.85rem; color: var(--text-1); margin-bottom: var(--sp-2); }
+.advisor-month-block ul { display: flex; flex-direction: column; gap: var(--sp-1); }
+.advisor-month-block li { font-size: 0.85rem; color: var(--text-2); padding-left: var(--sp-4); position: relative; }
+.advisor-month-block li::before { content: '→'; position: absolute; left: 0; color: var(--cyan); }
+
+.advisor-view-roadmap-btn { margin-top: var(--sp-4); }
+
+/* ---------- Career dashboard ---------- */
+#career-stat-cards { margin-bottom: var(--sp-5); }
+
+.career-roadmap-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-3);
+  font-size: 0.85rem;
+}
+.career-roadmap-row .name { width: 150px; flex-shrink: 0; color: var(--text-1); }
+.career-roadmap-row .progress-track { flex: 1; }
+.career-roadmap-row .pct { width: 40px; text-align: right; font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-2); }
+
+.career-tag-list { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+.career-tag {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: var(--r-full);
+}
+.career-tag.strong { background: rgba(16,185,129,0.1); color: var(--pass-light); border: 1px solid rgba(16,185,129,0.3); }
+.career-tag.weak { background: rgba(244,63,94,0.1); color: var(--fail); border: 1px solid rgba(244,63,94,0.3); }
+
+.career-next-step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  padding: var(--sp-3) 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.88rem;
+  color: var(--text-1);
+}
+.career-next-step-item:last-child { border-bottom: none; }
+.career-next-step-item .arrow { color: var(--cyan); flex-shrink: 0; }

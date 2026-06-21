@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QA Learning Hub — Learn, Practice, and Master Automation Testing</title>
+<meta name="description" content="An interactive platform for QA Engineers and Automation Testers to learn Selenium, Playwright, API Testing, Java, SQL, Git, Jenkins, TestNG, JUnit and Cucumber.">
+<link rel="icon" type="image/svg+xml" href="assets/icons/logo.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/icons/favicon-180.png">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+
+<div id="loading-screen">
+  <div class="loader-mark">
+    <div class="loader-glyph">
+      <span class="loader-dot"></span><span class="loader-dot"></span><span class="loader-dot"></span>
+      <span>booting test runner…</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark"><img src="assets/icons/logo.svg" alt="QA Learning Hub logo"></span>
+      <span>Learning Hub</span>
+    </a>
+
+    <nav class="nav-links" aria-label="Primary">
+      <a href="index.html" class="active">Home</a>
+      <a href="pages/learning.html">Learning Hub</a>
+      <a href="pages/automation-playground.html">Playground</a>
+      <a href="pages/api-testing-lab.html">API Lab</a>
+      <a href="pages/quiz-center.html">Quiz Center</a>
+      <a href="pages/coding-challenges.html">Challenges</a>
+      <a href="pages/interview-preparation.html">Interview Prep</a>
+      <a href="pages/dashboard.html">Dashboard</a>
+      <a href="pages/learning-paths.html">Learning Paths</a>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="search-trigger" id="search-trigger" aria-label="Open search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35" stroke-linecap="round"/></svg>
+        <span>Search…</span>
+        <kbd>⌘K</kbd>
+      </button>
+      <button class="theme-toggle" aria-label="Toggle dark mode">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" stroke-linecap="round"/></svg>
+      </button>
+      <a href="pages/dashboard.html" class="profile-btn" aria-label="Your dashboard">QA</a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-drawer-backdrop" id="mobile-drawer-backdrop"></div>
+  <div class="mobile-drawer" id="mobile-drawer">
+    <div class="mobile-drawer-head">
+      <span class="brand" style="font-size:0.95rem">Menu</span>
+      <button class="mobile-drawer-close" id="mobile-drawer-close" aria-label="Close menu">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <button class="mobile-drawer-search-btn" id="mobile-drawer-search-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35" stroke-linecap="round"/></svg>
+      <span>Search…</span>
+    </button>
+    <div class="mobile-drawer-section-label">Navigate</div>
+    <a href="index.html" class="active">Home</a>
+    <a href="pages/learning.html">Learning Hub</a>
+    <a href="pages/automation-playground.html">Automation Playground</a>
+    <a href="pages/api-testing-lab.html">API Testing Lab</a>
+        <a href="pages/learning-paths.html">Learning Paths</a>
+    <a href="pages/quiz-center.html">Quiz Center</a>
+    <a href="pages/coding-challenges.html">Coding Challenges</a>
+    <a href="pages/interview-preparation.html">Interview Preparation</a>
+    <a href="pages/dashboard.html">Dashboard</a>
+    <a href="pages/learning-paths.html">Learning Paths</a>
+    <div class="mobile-drawer-theme-row">
+      <span>Dark / Light mode</span>
+      <button class="theme-toggle" aria-label="Toggle dark mode">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ SEARCH OVERLAY ============ -->
+<div class="search-overlay" id="search-overlay">
+  <div class="search-panel">
+    <div class="search-input-row">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35" stroke-linecap="round"/></svg>
+      <input type="text" id="global-search-input" placeholder="Search topics, playground elements, API endpoints…" autocomplete="off">
+      <span class="search-esc">ESC</span>
+    </div>
+    <div class="search-results" id="search-results"></div>
+  </div>
+</div>
+
+<main>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="container hero-inner">
+      <div class="hero-copy reveal is-visible">
+        <span class="eyebrow">Build v4.6 · Test Suite Passing</span>
+        <h1>QA Learning Hub</h1>
+        <p class="hero-sub">Learn, Practice, and Master Automation Testing — Selenium, Playwright, API Testing, and the full QA stack, taught the way engineers actually work.</p>
+        <div class="hero-cta">
+          <a href="pages/learning.html" class="btn btn-primary btn-lg">Start Learning</a>
+          <a href="pages/automation-playground.html" class="btn btn-ghost btn-lg">Open Playground</a>
+        </div>
+        <div class="hero-meta">
+          <div class="avatar-stack" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+          </div>
+          <span class="muted">Joined by testers practicing real locator strategies daily</span>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal is-visible">
+        <div class="terminal-card">
+          <div class="terminal-bar">
+            <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+            <span class="terminal-title">qa-suite.spec.ts</span>
+          </div>
+          <div class="terminal-body" id="hero-assert-log">
+            <!-- populated by home.js -->
+          </div>
+        </div>
+        <div class="float-chip chip-1">100% <span>Open Source Curriculum</span></div>
+        <div class="float-chip chip-2">12 <span>Practice Modules</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STATS ============ -->
+  <section class="stats-strip">
+    <div class="container stats-grid">
+      <div class="stat-item reveal">
+        <div class="stat-num" data-counter="10" data-counter-suffix="+">0</div>
+        <div class="stat-label">Tech Topics Covered</div>
+      </div>
+      <div class="stat-item reveal">
+        <div class="stat-num" data-counter="30" data-counter-suffix="+">0</div>
+        <div class="stat-label">Playground Elements</div>
+      </div>
+      <div class="stat-item reveal">
+        <div class="stat-num" data-counter="250" data-counter-suffix="+">0</div>
+        <div class="stat-label">Interview Questions</div>
+      </div>
+      <div class="stat-item reveal">
+        <div class="stat-num" data-counter="100" data-counter-suffix="%">0</div>
+        <div class="stat-label">Free, No Backend Needed</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LEARNING ROADMAP ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">The Path</span>
+        <h2>One roadmap, four checkpoints</h2>
+        <p>Most QA careers follow the same arc. We built the hub around it instead of around a random list of tools.</p>
+      </div>
+
+      <div class="roadmap reveal">
+        <div class="roadmap-track" aria-hidden="true"></div>
+        <div class="roadmap-step">
+          <div class="roadmap-marker">01</div>
+          <h3>Manual Testing Foundations</h3>
+          <p>SQL, software testing concepts, and how to think like a tester before you automate anything.</p>
+        </div>
+        <div class="roadmap-step">
+          <div class="roadmap-marker">02</div>
+          <h3>Core Automation</h3>
+          <p>Selenium and Playwright — locators, waits, page objects, and the patterns that survive flaky DOMs.</p>
+        </div>
+        <div class="roadmap-step">
+          <div class="roadmap-marker">03</div>
+          <h3>Frameworks &amp; CI</h3>
+          <p>TestNG, JUnit, Cucumber BDD, Git, and Jenkins — turning scripts into a pipeline your team can trust.</p>
+        </div>
+        <div class="roadmap-step">
+          <div class="roadmap-marker">04</div>
+          <h3>API &amp; Interview Ready</h3>
+          <p>REST API testing, status codes, and the interview questions that separate fundamentals from buzzwords.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FEATURED TOPICS ============ -->
+  <section class="section" style="background:var(--bg-1)">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Learning Hub</span>
+        <h2>Ten topics. Full depth on every one.</h2>
+        <p>Each topic ships with concepts, real-world examples, best practices, and interview questions — not just a definition.</p>
+      </div>
+
+      <div class="grid grid-4" id="topic-card-grid">
+        <!-- populated by home.js from TOPIC_DATA in learning-data.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ POPULAR LEARNING PATHS ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Curated Paths</span>
+        <h2>Popular learning paths</h2>
+        <p>Don't know where to start? Follow a path built for your goal.</p>
+      </div>
+
+      <div class="grid grid-3">
+        <div class="card card-hover path-card reveal">
+          <span class="badge badge-beginner">Beginner Friendly</span>
+          <h3>Manual → Automation Switch</h3>
+          <p class="muted">For manual testers moving into automation: SQL → Software Testing → Selenium → TestNG.</p>
+          <div class="path-steps mono">SQL → Testing → Selenium → TestNG</div>
+          <a href="pages/learning.html" class="btn btn-ghost btn-sm mt-4">View Path</a>
+        </div>
+        <div class="card card-hover glow-cyan path-card reveal">
+          <span class="badge badge-intermediate">Most Popular</span>
+          <h3>Modern Automation Engineer</h3>
+          <p class="muted">The current industry default: Playwright, API Testing, Git, and CI with Jenkins.</p>
+          <div class="path-steps mono">Playwright → API → Git → Jenkins</div>
+          <a href="pages/learning.html" class="btn btn-ghost btn-sm mt-4">View Path</a>
+        </div>
+        <div class="card card-hover glow-pass path-card reveal">
+          <span class="badge badge-advanced">Interview Sprint</span>
+          <h3>2-Week Interview Prep</h3>
+          <p class="muted">Heavy on Quiz Center and Interview Prep — built for fast revision before an interview.</p>
+          <div class="path-steps mono">Quiz Center → Interview Prep → Challenges</div>
+          <a href="pages/interview-preparation.html" class="btn btn-ghost btn-sm mt-4">View Path</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PRACTICE GRID ============ -->
+  <section class="section" style="background:var(--bg-1)">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Hands-On</span>
+        <h2>Practice where engineers actually learn</h2>
+        <p>Reading about a dropdown won't teach you to automate one. These will.</p>
+      </div>
+
+      <div class="grid grid-4">
+        <a href="pages/automation-playground.html" class="card card-hover practice-tile reveal">
+          <div class="practice-icon">▢</div>
+          <h3>Automation Playground</h3>
+          <p class="muted">30+ real UI elements — alerts, frames, drag & drop, Shadow DOM — to practice locators on.</p>
+        </a>
+        <a href="pages/api-testing-lab.html" class="card card-hover practice-tile reveal">
+          <div class="practice-icon">{ }</div>
+          <h3>API Testing Lab</h3>
+          <p class="muted">GET, POST, PUT, PATCH, DELETE — with real request/response bodies and status codes.</p>
+        </a>
+        <a href="pages/quiz-center.html" class="card card-hover practice-tile reveal">
+          <div class="practice-icon">?</div>
+          <h3>Quiz Center</h3>
+          <p class="muted">Timed MCQ quizzes across all 10 topics with instant scoring and explanations.</p>
+        </a>
+        <a href="pages/coding-challenges.html" class="card card-hover practice-tile reveal">
+          <div class="practice-icon">&lt;/&gt;</div>
+          <h3>Coding Challenges</h3>
+          <p class="muted">XPath, CSS selectors, Selenium and Playwright challenges with hints and solutions.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FINAL CTA ============ -->
+  <section class="section cta-section">
+    <div class="container cta-inner reveal">
+      <h2>Your test suite is empty. Let's fix that.</h2>
+      <p class="muted">Start with one topic, one quiz, or one playground element. The dashboard tracks the rest.</p>
+      <div class="hero-cta center-cta">
+        <a href="pages/learning.html" class="btn btn-primary btn-lg">Start Learning</a>
+        <a href="pages/dashboard.html" class="btn btn-ghost btn-lg">View Dashboard</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="brand"><span class="brand-mark"><img src="assets/icons/logo.svg" alt="QA Learning Hub logo"></span><span>Learning Hub</span></a>
+        <p>An interactive platform for QA Engineers, Manual Testers, and Automation Testers to learn and practice — built for engineers, by engineers.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Learn</h4>
+        <a href="pages/learning.html">Learning Hub</a>
+        <a href="pages/automation-playground.html">Automation Playground</a>
+        <a href="pages/api-testing-lab.html">API Testing Lab</a>
+      </div>
+      <div class="footer-col">
+        <h4>Practice</h4>
+        <a href="pages/quiz-center.html">Quiz Center</a>
+        <a href="pages/coding-challenges.html">Coding Challenges</a>
+        <a href="pages/interview-preparation.html">Interview Prep</a>
+      </div>
+      <div class="footer-col">
+        <h4>Account</h4>
+        <a href="pages/dashboard.html">Dashboard</a>
+        <a href="pages/about.html">About</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 QA Learning Hub. Built with HTML, CSS &amp; JavaScript.</span>
+      <span class="assert-line pass"><span class="status mono">✓ PASS</span><span class="target mono">footer.render()</span></span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/app.js"></script>
+<script src="js/learning-data.js"></script>
+<script src="js/home.js"></script>
+</body>
+</html>

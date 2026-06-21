@@ -1,0 +1,36 @@
+/* ============================================================
+   ABOUT PAGE STYLES
+   ============================================================ */
+
+.about-hero {
+  padding: var(--sp-8) 0 var(--sp-6);
+  border-bottom: 1px solid var(--border);
+}
+.about-hero h1 { font-size: clamp(2rem, 4vw, 2.8rem); margin: var(--sp-3) 0 var(--sp-3); max-width: 700px; }
+
+.about-content {
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-7);
+}
+
+.about-block h2 { font-size: 1.3rem; margin-bottom: var(--sp-3); }
+.about-block p { color: var(--text-1); font-size: 0.98rem; }
+.about-block code {
+  background: var(--bg-2);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.88rem;
+  color: var(--cyan);
+}
+
+.about-stats-row {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-1);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--sp-4) var(--sp-5);
+  gap: var(--sp-1);
+}
