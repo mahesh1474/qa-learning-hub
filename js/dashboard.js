@@ -71,13 +71,12 @@
       return;
     }
 
-    const nameMap = typeof QUIZ_BANK !== 'undefined' ? null : null;
     wrap.innerHTML = recent.map(a => {
-      const topicName = typeof TOPIC_DATA !== 'undefined' && TOPIC_DATA[a.topic] ? TOPIC_DATA[a.topic].name : a.topic;
+      const levelLabel = typeof QUIZ_LEVELS !== 'undefined' && QUIZ_LEVELS[a.topic] ? `${QUIZ_LEVELS[a.topic].label} Quiz` : a.topic;
       const scoreClass = a.percentage >= 70 ? 'good' : a.percentage < 40 ? 'bad' : '';
       return `
         <div class="dash-quiz-row">
-          <span class="topic">${topicName}</span>
+          <span class="topic">${levelLabel}</span>
           <span class="date">${new Date(a.date).toLocaleDateString()}</span>
           <span class="score ${scoreClass}">${a.score}/${a.total} (${a.percentage}%)</span>
         </div>

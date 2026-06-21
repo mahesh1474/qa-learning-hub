@@ -105,6 +105,35 @@ header.site-header {
 @media (max-width: 1024px) {
   .nav-links { display: none; }
   .nav-toggle { display: flex; }
+
+  /* Mobile header layout: hamburger (left) — logo (center) — theme toggle (right).
+     nav-toggle is a direct child of nav-inner (moved out of nav-actions in the
+     markup) so it can be placed independently in the grid's first column. */
+  .nav-inner {
+    display: grid;
+    grid-template-columns: 44px 1fr 44px;
+    align-items: center;
+    column-gap: var(--sp-3);
+  }
+
+  .nav-inner > .nav-toggle {
+    grid-column: 1;
+  }
+
+  .nav-inner > .brand {
+    grid-column: 2;
+    justify-content: center;
+    margin: 0 auto;
+  }
+
+  .nav-inner > .nav-actions {
+    grid-column: 3;
+    justify-content: flex-end;
+  }
+
+  /* Only the theme toggle stays visible in the mobile header's right slot —
+     profile access already lives in the sidebar nav list. */
+  .nav-actions .profile-btn { display: none; }
 }
 
 /* Mobile sidebar — slides in from the right with backdrop overlay */
@@ -197,20 +226,6 @@ header.site-header {
 
 .mobile-drawer-theme-row span { font-size: 0.92rem; color: var(--text-1); font-weight: 500; }
 
-.mobile-drawer-search-btn {
-  display: flex;
-  align-items: center;
-  gap: var(--sp-3);
-  padding: var(--sp-3) var(--sp-4);
-  border-radius: var(--r-md);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  color: var(--text-2);
-  font-size: 0.92rem;
-  width: 100%;
-  margin-top: var(--sp-2);
-}
-
 /* ---------- Theme toggle ---------- */
 .theme-toggle {
   width: 40px; height: 40px;
@@ -239,142 +254,16 @@ header.site-header {
 .profile-btn {
   width: 40px; height: 40px;
   border-radius: 50%;
-  background: var(--grad-brand);
+  background: var(--accent);
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--font-mono);
   font-weight: 700;
   font-size: 0.82rem;
-  color: #fff;
+  color: var(--on-accent);
   border: 2px solid var(--border);
 }
-
-/* ---------- Search trigger + overlay ---------- */
-.search-trigger {
-  display: flex;
-  align-items: center;
-  gap: var(--sp-3);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--r-md);
-  padding: 0.5rem 0.85rem;
-  color: var(--text-2);
-  font-size: 0.85rem;
-  width: clamp(140px, 16vw, 220px);
-  min-width: 0;
-  flex-shrink: 1;
-}
-
-.search-trigger span {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.search-trigger:hover { border-color: var(--border-hi); }
-.search-trigger kbd {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  background: var(--bg-2);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 0.1rem 0.4rem;
-  margin-left: auto;
-  color: var(--text-3);
-}
-
-@media (max-width: 1240px) { .search-trigger { display: none; } }
-
-.search-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(8, 9, 15, 0.75);
-  backdrop-filter: blur(6px);
-  z-index: 2000;
-  display: none;
-  align-items: flex-start;
-  justify-content: center;
-  padding-top: 12vh;
-}
-
-.search-overlay.open { display: flex; }
-
-.search-panel {
-  width: min(640px, 92vw);
-  background: var(--surface-hi);
-  border: 1px solid var(--border-hi);
-  border-radius: var(--r-lg);
-  box-shadow: var(--shadow-lg);
-  overflow: hidden;
-  animation: searchIn var(--dur-med) var(--ease) forwards;
-}
-
-@keyframes searchIn {
-  from { opacity: 0; transform: translateY(-12px) scale(0.98); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-.search-input-row {
-  display: flex;
-  align-items: center;
-  gap: var(--sp-3);
-  padding: var(--sp-5);
-  border-bottom: 1px solid var(--border);
-}
-
-.search-input-row svg { flex-shrink: 0; color: var(--text-2); width: 20px; height: 20px; }
-
-#global-search-input {
-  flex: 1;
-  font-size: 1.05rem;
-  color: var(--text-0);
-  background: none;
-}
-
-#global-search-input::placeholder { color: var(--text-3); }
-
-.search-esc {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: var(--text-3);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 0.15rem 0.45rem;
-}
-
-.search-results {
-  max-height: 50vh;
-  overflow-y: auto;
-  padding: var(--sp-3);
-}
-
-.search-result-item {
-  display: flex;
-  align-items: center;
-  gap: var(--sp-4);
-  padding: var(--sp-3) var(--sp-4);
-  border-radius: var(--r-md);
-  transition: background var(--dur-fast);
-}
-
-.search-result-item:hover, .search-result-item.kbd-active { background: var(--surface); }
-
-.search-result-icon {
-  width: 36px; height: 36px;
-  border-radius: var(--r-sm);
-  background: var(--bg-2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  color: var(--cyan);
-  flex-shrink: 0;
-}
-
-.search-result-title { font-size: 0.92rem; color: var(--text-0); font-weight: 500; }
-.search-result-cat { font-size: 0.78rem; color: var(--text-3); }
 
 /* ---------- Footer ---------- */
 footer.site-footer {
@@ -434,6 +323,13 @@ footer.site-footer {
 
 .footer-bottom .assert-line { padding: 0; opacity: 1; transform: none; animation: none; }
 
+.footer-credit-break { display: none; }
+.footer-bottom strong { color: var(--text-1); font-weight: 600; }
+
+@media (max-width: 560px) {
+  .footer-credit-break { display: block; }
+}
+
 /* ---------- Floating Action Button ---------- */
 .fab {
   position: fixed;
@@ -445,12 +341,12 @@ footer.site-footer {
 .fab-main {
   width: 58px; height: 58px;
   border-radius: 50%;
-  background: var(--grad-brand);
-  color: #fff;
+  background: var(--accent);
+  color: var(--on-accent);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--shadow-glow-indigo);
+  box-shadow: 0 0 0 1px rgba(255,201,60,0.5), 0 8px 28px rgba(255,201,60,0.3);
   transition: transform var(--dur-fast) var(--ease-soft);
 }
 

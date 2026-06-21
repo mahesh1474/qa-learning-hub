@@ -226,10 +226,73 @@
     });
   }
 
+  /* ---------------------------------------------------------
+     ASK THE HUB — rule-based Q&A widget
+     --------------------------------------------------------- */
+  function renderAskHubResults(query) {
+    const wrap = document.getElementById('ask-hub-results');
+    if (typeof QAEngine === 'undefined') {
+      wrap.innerHTML = `<div class="empty-state"><div class="glyph">∅</div><h3>Search unavailable</h3><p>The Q&amp;A engine didn't load correctly.</p></div>`;
+      return;
+    }
+
+    const results = QAEngine.search(query, 4);
+
+    if (!results.length) {
+      wrap.innerHTML = `
+        <div class="empty-state ask-hub-empty">
+          <div class="glyph">∅</div>
+          <h3>No close match found</h3>
+          <p>Try rephrasing, or browse the topic directly in the sidebar — this searches existing concepts and interview questions, not the open web.</p>
+        </div>
+      `;
+      return;
+    }
+
+    wrap.innerHTML = `<div class="ask-hub-result-list">` + results.map((r, i) => `
+      <div class="ask-hub-result-card" data-topic="${r.topicId}" style="animation-delay:${i * 0.06}s">
+        <div class="ask-hub-result-head">
+          <span class="badge badge-info">${r.topicName}</span>
+          <span class="ask-hub-result-type">${r.type === 'interview' ? 'Interview Q&A' : r.type === 'practice' ? 'Best Practice' : 'Concept'}</span>
+        </div>
+        <h4>${r.title}</h4>
+        <p>${r.answer}</p>
+        <button class="btn btn-ghost btn-sm ask-hub-jump-btn" data-topic="${r.topicId}">Open ${r.topicName} in Learning Hub →</button>
+      </div>
+    `).join('') + `</div>`;
+  }
+
+  function bindAskHub() {
+    const input = document.getElementById('ask-hub-input');
+    const submitBtn = document.getElementById('ask-hub-submit');
+    const resultsWrap = document.getElementById('ask-hub-results');
+    if (!input || !submitBtn) return;
+
+    function runSearch() {
+      const query = input.value.trim();
+      if (!query) return;
+      renderAskHubResults(query);
+    }
+
+    submitBtn.addEventListener('click', runSearch);
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') runSearch();
+    });
+
+    resultsWrap.addEventListener('click', (e) => {
+      const jumpBtn = e.target.closest('.ask-hub-jump-btn');
+      if (jumpBtn) {
+        activateTopic(jumpBtn.dataset.topic);
+        document.getElementById('topic-panels').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  }
+
   function init() {
     renderSidebar();
     renderAllPanels();
     bindEvents();
+    bindAskHub();
 
     const hash = window.location.hash.replace('#', '');
     const initial = TOPIC_ORDER.includes(hash) ? hash : TOPIC_ORDER[0];

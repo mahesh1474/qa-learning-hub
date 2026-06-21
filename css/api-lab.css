@@ -37,12 +37,19 @@
 @media (max-width: 860px) { .method-panel-wrap { grid-template-columns: 1fr; } }
 
 .api-panel-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
+  background: rgba(26, 29, 46, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--r-lg);
   overflow: hidden;
   box-shadow: var(--shadow-3d-sm);
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
   transition: box-shadow var(--dur-med) var(--ease);
+}
+
+:root[data-theme="light"] .api-panel-card {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(20, 22, 40, 0.08);
 }
 
 .api-panel-card:hover { box-shadow: var(--shadow-3d-md); }

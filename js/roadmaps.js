@@ -69,7 +69,7 @@
      --------------------------------------------------------- */
   function renderRecommendations(roadmap) {
     const quizLinks = roadmap.recommendedQuizTopics.length
-      ? roadmap.recommendedQuizTopics.map(t => `<a href="quiz-center.html">${topicNameFromId(t)} Quiz</a>`).join('')
+      ? `<a href="quiz-center.html">Practice ${roadmap.recommendedQuizTopics.map(t => topicNameFromId(t)).join(', ')} questions in the Quiz Center</a>`
       : `<span class="none">No quizzes mapped to this roadmap yet.</span>`;
 
     const challengeLinks = roadmap.recommendedChallengeCategories.length
@@ -250,21 +250,31 @@
     }).join('');
   }
 
-  // Strong/weak areas are derived from quiz performance per topic —
-  // a topic needs at least one attempt to be judged either way.
+  // Strong/weak areas are derived from quiz performance per topic.
+  // Since quiz attempts are now recorded by level (Beginner/Intermediate/
+  // Advanced) rather than a single topic, each attempt's topicBreakdown
+  // field (added per-topic correct/total counts) is the real source of
+  // per-topic signal — older attempts recorded before this existed won't
+  // have it and are safely skipped here.
   function computeAreas() {
     const data = QAStore.get();
     const byTopic = {};
+
     data.quizAttempts.forEach(a => {
-      if (!byTopic[a.topic]) byTopic[a.topic] = [];
-      byTopic[a.topic].push(a.percentage);
+      if (!a.topicBreakdown) return; // older attempt format, no per-topic data
+      Object.keys(a.topicBreakdown).forEach(topicId => {
+        const b = a.topicBreakdown[topicId];
+        if (!byTopic[topicId]) byTopic[topicId] = { correct: 0, total: 0 };
+        byTopic[topicId].correct += b.correct;
+        byTopic[topicId].total += b.total;
+      });
     });
 
     const strong = [];
     const weak = [];
     Object.keys(byTopic).forEach(topicId => {
-      const scores = byTopic[topicId];
-      const avg = scores.reduce((s, v) => s + v, 0) / scores.length;
+      const { correct, total } = byTopic[topicId];
+      const avg = (correct / total) * 100;
       if (avg >= 70) strong.push(topicId);
       else weak.push(topicId);
     });

@@ -258,15 +258,9 @@
 .career-roadmap-row .progress-track { flex: 1; }
 .career-roadmap-row .pct { width: 40px; text-align: right; font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-2); }
 
-.career-tag-list { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
-.career-tag {
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  padding: 0.35rem 0.7rem;
-  border-radius: var(--r-full);
-}
-.career-tag.strong { background: rgba(16,185,129,0.1); color: var(--pass-light); border: 1px solid rgba(16,185,129,0.3); }
-.career-tag.weak { background: rgba(244,63,94,0.1); color: var(--fail); border: 1px solid rgba(244,63,94,0.3); }
+/* .career-tag / .career-tag-list now live in style.css (global) so the
+   Quiz Center's per-topic result summary can use them without an
+   unnecessary cross-page dependency on roadmaps.css. */
 
 .career-next-step-item {
   display: flex;

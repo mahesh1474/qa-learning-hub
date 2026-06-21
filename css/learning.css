@@ -12,6 +12,90 @@
 }
 .learning-hero p { max-width: 600px; font-size: 1.02rem; }
 
+/* ---------- Ask the Hub widget ---------- */
+.ask-hub-widget {
+  max-width: 720px;
+  margin-top: var(--sp-6);
+}
+
+.ask-hub-label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  margin-bottom: var(--sp-3);
+}
+
+.ask-hub-label > span:first-child {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text-0);
+}
+
+.ask-hub-note {
+  font-size: 0.78rem;
+  color: var(--text-3);
+}
+
+.ask-hub-input-row {
+  display: flex;
+  gap: var(--sp-3);
+}
+
+.ask-hub-input-row .pg-input { flex: 1; }
+
+@media (max-width: 560px) {
+  .ask-hub-input-row { flex-direction: column; }
+}
+
+.ask-hub-result-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  margin-top: var(--sp-5);
+}
+
+.ask-hub-result-card {
+  background: rgba(26, 29, 46, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--r-md);
+  padding: var(--sp-4) var(--sp-5);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  opacity: 0;
+  transform: translateY(8px);
+  animation: askHubCardIn var(--dur-med) var(--ease) forwards;
+}
+
+:root[data-theme="light"] .ask-hub-result-card {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(20, 22, 40, 0.08);
+}
+
+@keyframes askHubCardIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.ask-hub-result-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--sp-3);
+}
+
+.ask-hub-result-type {
+  font-size: 0.72rem;
+  color: var(--text-3);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.ask-hub-result-card h4 { font-size: 1rem; margin-bottom: var(--sp-2); }
+.ask-hub-result-card p { font-size: 0.9rem; color: var(--text-1); margin-bottom: var(--sp-3); }
+
+.ask-hub-empty { padding: var(--sp-6) var(--sp-4); }
+
 .learning-layout {
   display: grid;
   grid-template-columns: 260px 1fr;
@@ -177,10 +261,17 @@
 @media (max-width: 768px) { .concept-grid { grid-template-columns: 1fr; } }
 
 .concept-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
+  background: rgba(26, 29, 46, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--r-md);
   padding: var(--sp-4) var(--sp-5);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+}
+
+:root[data-theme="light"] .concept-card {
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(20, 22, 40, 0.08);
 }
 .concept-card h4 {
   font-size: 0.95rem;
@@ -258,10 +349,17 @@
 /* ---------- Interview accordion (within topic) ---------- */
 .mini-accordion { display: flex; flex-direction: column; gap: var(--sp-3); }
 .mini-accordion-item {
-  background: var(--surface);
-  border: 1px solid var(--border);
+  background: rgba(26, 29, 46, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--r-md);
   overflow: hidden;
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+}
+
+:root[data-theme="light"] .mini-accordion-item {
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(20, 22, 40, 0.08);
 }
 .mini-accordion-q {
   display: flex;

@@ -73,16 +73,25 @@ const QAStore = (() => {
     });
   }
 
-  function recordQuiz(topic, score, total) {
+  function recordQuiz(topic, score, total, topicBreakdown) {
     return update(d => {
       const percentage = Math.round((score / total) * 100);
-      d.quizAttempts.push({ topic, score, total, percentage, date: new Date().toISOString() });
+      const attempt = { topic, score, total, percentage, date: new Date().toISOString() };
+      if (topicBreakdown) attempt.topicBreakdown = topicBreakdown;
+      d.quizAttempts.push(attempt);
       d.xp += score * 10;
     });
   }
 
   function markChallengeComplete(challengeId) {
     return update(d => { d.challengesCompleted[challengeId] = true; d.xp += 25; });
+  }
+
+  function unmarkChallengeComplete(challengeId) {
+    return update(d => {
+      d.challengesCompleted[challengeId] = false;
+      d.xp = Math.max(0, d.xp - 25);
+    });
   }
 
   function markRoadmapStep(roadmapId, stepIndex) {
@@ -144,7 +153,7 @@ const QAStore = (() => {
 
   return {
     get, update, markTopicComplete, unmarkTopicComplete, setTopicProgress, recordQuiz,
-    markChallengeComplete, toggleBookmark, markPlaygroundVisited,
+    markChallengeComplete, unmarkChallengeComplete, toggleBookmark, markPlaygroundVisited,
     markApiLabVisited, touchStreak, reset,
     markRoadmapStep, unmarkRoadmapStep, resetRoadmap,
   };
@@ -284,15 +293,6 @@ function initNav() {
     });
   }
 
-  // Mobile drawer search button opens the same global search overlay
-  const mobileSearchBtn = document.getElementById('mobile-drawer-search-btn');
-  if (mobileSearchBtn) {
-    mobileSearchBtn.addEventListener('click', () => {
-      closeDrawer();
-      setTimeout(() => window.openGlobalSearch?.(), 320);
-    });
-  }
-
   const path = window.location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('.nav-links a, .mobile-drawer a').forEach(a => {
     const href = a.getAttribute('href').split('/').pop();
@@ -335,128 +335,10 @@ function initFab() {
 }
 
 /* ---------------------------------------------------------
-   10. GLOBAL SEARCH
+   10. BASE PATH HELPER (still used by the FAB menu links)
    --------------------------------------------------------- */
-const SEARCH_INDEX = [
-  { title: 'Selenium', cat: 'Learning Hub', url: 'pages/learning.html#selenium', icon: 'SE' },
-  { title: 'Playwright', cat: 'Learning Hub', url: 'pages/learning.html#playwright', icon: 'PW' },
-  { title: 'API Testing', cat: 'Learning Hub', url: 'pages/learning.html#api-testing', icon: 'API' },
-  { title: 'Java Fundamentals', cat: 'Learning Hub', url: 'pages/learning.html#java', icon: 'JV' },
-  { title: 'SQL', cat: 'Learning Hub', url: 'pages/learning.html#sql', icon: 'SQL' },
-  { title: 'Git', cat: 'Learning Hub', url: 'pages/learning.html#git', icon: 'GIT' },
-  { title: 'Jenkins', cat: 'Learning Hub', url: 'pages/learning.html#jenkins', icon: 'JK' },
-  { title: 'TestNG', cat: 'Learning Hub', url: 'pages/learning.html#testng', icon: 'TNG' },
-  { title: 'JUnit', cat: 'Learning Hub', url: 'pages/learning.html#junit', icon: 'JU' },
-  { title: 'Cucumber BDD', cat: 'Learning Hub', url: 'pages/learning.html#cucumber', icon: 'CK' },
-  { title: 'Automation Playground', cat: 'Practice', url: 'pages/automation-playground.html', icon: '◈' },
-  { title: 'API Testing Lab', cat: 'Practice', url: 'pages/api-testing-lab.html', icon: '◈' },
-  { title: 'Quiz Center', cat: 'Practice', url: 'pages/quiz-center.html', icon: '◈' },
-  { title: 'Coding Challenges', cat: 'Practice', url: 'pages/coding-challenges.html', icon: '◈' },
-  { title: 'Interview Preparation', cat: 'Practice', url: 'pages/interview-preparation.html', icon: '◈' },
-  { title: 'Dashboard', cat: 'Account', url: 'pages/dashboard.html', icon: '◇' },
-  { title: 'Learning Paths & Career Roadmaps', cat: 'Site', url: 'pages/learning-paths.html', icon: '◆' },
-  { title: 'Beginner QA Roadmap', cat: 'Roadmaps', url: 'pages/learning-paths.html#beginnerQA', icon: '01' },
-  { title: 'Automation Test Engineer Roadmap', cat: 'Roadmaps', url: 'pages/learning-paths.html#automationEngineer', icon: '02' },
-  { title: 'Playwright Specialist Roadmap', cat: 'Roadmaps', url: 'pages/learning-paths.html#playwrightSpecialist', icon: '03' },
-  { title: 'API Testing Specialist Roadmap', cat: 'Roadmaps', url: 'pages/learning-paths.html#apiTestingSpecialist', icon: '04' },
-  { title: 'SDET Roadmap', cat: 'Roadmaps', url: 'pages/learning-paths.html#sdet', icon: '05' },
-  { title: 'QA Lead Roadmap', cat: 'Roadmaps', url: 'pages/learning-paths.html#qaLead', icon: '06' },
-  { title: 'Text Box Practice', cat: 'Playground', url: 'pages/automation-playground.html#text-box', icon: '▢' },
-  { title: 'Alerts & Popups', cat: 'Playground', url: 'pages/automation-playground.html#alerts', icon: '▢' },
-  { title: 'Drag and Drop', cat: 'Playground', url: 'pages/automation-playground.html#drag-drop', icon: '▢' },
-  { title: 'Frames & iFrames', cat: 'Playground', url: 'pages/automation-playground.html#frames', icon: '▢' },
-  { title: 'Shadow DOM', cat: 'Playground', url: 'pages/automation-playground.html#shadow-dom', icon: '▢' },
-  { title: 'GET Request', cat: 'API Lab', url: 'pages/api-testing-lab.html#get', icon: '▢' },
-  { title: 'POST Request', cat: 'API Lab', url: 'pages/api-testing-lab.html#post', icon: '▢' },
-  { title: 'Status Code Reference', cat: 'API Lab', url: 'pages/api-testing-lab.html#status-codes', icon: '▢' },
-  { title: 'XPath Challenges', cat: 'Challenges', url: 'pages/coding-challenges.html#xpath', icon: '▢' },
-  { title: 'CSS Selector Challenges', cat: 'Challenges', url: 'pages/coding-challenges.html#css-selectors', icon: '▢' },
-  { title: 'About QA Learning Hub', cat: 'Site', url: 'pages/about.html', icon: '○' },
-];
-
 function getBasePrefix() {
   return window.location.pathname.includes('/pages/') ? '../' : '';
-}
-
-function initSearch() {
-  const trigger = document.getElementById('search-trigger');
-  const overlay = document.getElementById('search-overlay');
-  const input = document.getElementById('global-search-input');
-  const results = document.getElementById('search-results');
-  if (!overlay || !input || !results) return;
-
-  const base = getBasePrefix();
-  let activeIndex = -1;
-  let currentList = [];
-
-  function renderResults(query) {
-    const q = query.trim().toLowerCase();
-    currentList = q
-      ? SEARCH_INDEX.filter(item => item.title.toLowerCase().includes(q) || item.cat.toLowerCase().includes(q))
-      : SEARCH_INDEX.slice(0, 8);
-    activeIndex = -1;
-
-    if (!currentList.length) {
-      results.innerHTML = `<div class="empty-state"><div class="glyph">∅</div><h3>No results</h3><p>Try "Selenium", "API Lab", or "Quiz".</p></div>`;
-      return;
-    }
-
-    results.innerHTML = currentList.map((item, i) => `
-      <a class="search-result-item" data-index="${i}" href="${base}${item.url}">
-        <span class="search-result-icon">${item.icon}</span>
-        <span class="flex-col">
-          <span class="search-result-title">${item.title}</span>
-          <span class="search-result-cat">${item.cat}</span>
-        </span>
-      </a>
-    `).join('');
-  }
-
-  function open() {
-    overlay.classList.add('open');
-    renderResults('');
-    setTimeout(() => input.focus(), 50);
-  }
-  function close() {
-    overlay.classList.remove('open');
-    input.value = '';
-  }
-
-  // Exposed so other UI (e.g. the mobile sidebar's search button) can
-  // trigger the exact same open behavior, including rendering results.
-  window.openGlobalSearch = open;
-
-  if (trigger) trigger.addEventListener('click', open);
-  overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
-
-  input.addEventListener('input', () => renderResults(input.value));
-
-  document.addEventListener('keydown', (e) => {
-    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
-      e.preventDefault();
-      overlay.classList.contains('open') ? close() : open();
-    }
-    if (e.key === 'Escape' && overlay.classList.contains('open')) close();
-
-    if (overlay.classList.contains('open')) {
-      const items = results.querySelectorAll('.search-result-item');
-      if (e.key === 'ArrowDown') {
-        e.preventDefault();
-        activeIndex = Math.min(activeIndex + 1, items.length - 1);
-        items.forEach((it, i) => it.classList.toggle('kbd-active', i === activeIndex));
-        items[activeIndex]?.scrollIntoView({ block: 'nearest' });
-      }
-      if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        activeIndex = Math.max(activeIndex - 1, 0);
-        items.forEach((it, i) => it.classList.toggle('kbd-active', i === activeIndex));
-        items[activeIndex]?.scrollIntoView({ block: 'nearest' });
-      }
-      if (e.key === 'Enter' && activeIndex >= 0 && items[activeIndex]) {
-        window.location.href = items[activeIndex].getAttribute('href');
-      }
-    }
-  });
 }
 
 /* ---------------------------------------------------------
@@ -507,7 +389,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initLoadingScreen();
   initNav();
   initThemeToggleButtons();
-  initSearch();
   initScrollReveal();
   initCounters();
   injectFabAndToast();
